@@ -11,11 +11,11 @@ export class Modal extends React.Component {
     };
 
     componentWillUnmount() {
-    window.removeEventListener('keydown', this.hendleKeyDown)
+    window.removeEventListener('keydown', this.handleKeyDown)
     };
 
 
-    hendleKeyDown = event => {
+    handleKeyDown = event => {
         if (event.code === 'Escape') {
             this.props.onClose();
         }
@@ -44,4 +44,5 @@ Modal.propTypes = {
     onClose: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     largeImageURL: PropTypes.string.isRequired,
+    
 };

@@ -18,16 +18,17 @@ export class App extends React.Component {
     largeImageURL: null,
     isLoading: false,
     error: null,
-    showModal: false,
+    isShowModal: false,
+   
   };
 
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query || prevState.page !== this.state.page) {
-      this.toggleModal();
+      this.toggleLoader();
     
       try {
-        const data = await fetchImages(this.state.query, this.setState.page);
+        const data = await fetchImages(this.state.query, this.state.page);
         this.setState({ totalImages: data.totalHits });
 
         if (data.totalHits === 0) {
@@ -35,16 +36,19 @@ export class App extends React.Component {
           toast.info('Sorry, there are no images matching your search query. Please try again.')
           return;
         }
-        this.setState({ images: [...this.state.images, ...data.hits] });
+        this.setState ({
+          images: [...this.state.images, ...data.hits]});
       }
       catch (error) {
-        this.setState({ error: true, isLoading: false });
+        this.setState({ error });
         toast.error('Please try again.')
+      } finally {
+        this.toggleLoader();
       }
     }
   };
 
-  hendleSearchBar = query => {
+  handleSearchBar = query => {
     if (query === this.state.query)
       return;
     this.setState({
@@ -52,27 +56,30 @@ export class App extends React.Component {
       query,
       page: 1,
       error: null,
+      
     })
   };
 
+
   onLoadMore = () => {
-    if(this.state.images.length === this.state.totalImages)
+    if (this.state.images.length === this.state.totalImages) {
+      toast.info('No more photos')
+    }
     this.setState(({ page }) => ({
-      page: page + 1,
-      showModal: true,
+      page:page + 1,
     }))
   };
 
-  onClick = event => {
+
+  onClickModal = event => {
     this.setState({ largeImageURL: event.target.dataset.source })
-    this.toggleModal()
+    this.toggleModal();
   };
 
-  toggleModal = (largeImageURL) => {
-    this.setState(({ showModal }) => ({
-      shoModal: !showModal,
+  toggleModal = () => {
+    this.setState(({ isShowModal }) => ({
+      isShoModal: !isShowModal,
     }));
-    this.setState({largeImageURL: largeImageURL})
   };
   
   toggleLoader = () => {
@@ -83,27 +90,26 @@ export class App extends React.Component {
 
 
   render() {
-    const { images, tags, error, largeImageURL, isLoading, showModal } = this.state;
+    const { images,  error, largeImageURL, isLoading, isShowModal } = this.state;
 
     return (
       <div>
-        <Searchbar onSubmit={this.hendleSearchBar}></Searchbar>
+        <Searchbar onSubmit={this.handleSearchBar}  />
 
-        {images.length !== 0 && (
-          <ImageGallery images={images} error={error} onClick={this.onClick} />
+        {images.length !== 0 && !error && (
+          <ImageGallery images={images} error={error} onClickModal={this.onClickModal} />
         )}
 
         
         {isLoading && <Loader />}
 
         
-        {!isLoading && images.length >= 11 && !error &&
-          (<Button onClick={this.onLoadMore } />)}
+        {!isLoading && images.length >= 12 && !error &&
+          (<Button onLoadMore={this.onLoadMore } />)}
         
-        {showModal && (
-          <Modal onClose={this.toggleModal}>
-            <img src={largeImageURL} alt={tags} />
-          </Modal>)}
+        {isShowModal && (
+          <Modal onClick={this.toggleModal}
+            largeImageURL={largeImageURL}/>)}
        
         <ToastContainer
           position="top-right"

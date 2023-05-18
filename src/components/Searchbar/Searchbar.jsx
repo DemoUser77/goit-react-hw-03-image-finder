@@ -31,7 +31,7 @@ export class Searchbar extends React.Component {
       <SearchHeader>
         <SearchForm onSubmit={this.handleSubmit}>
           <SearchButton type="submit">
-            <SearchSpan>Search</SearchSpan>
+            <SearchSpan></SearchSpan>
           </SearchButton>
 
           <SearchInput

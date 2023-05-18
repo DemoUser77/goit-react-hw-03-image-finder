@@ -9,8 +9,9 @@ line-height: calc(30 / 16);
 align-items: center;
 text-align: center;
 letter-spacing: 0.10em;
+cursor: pointer;
     
-margin: auto;
+margin: 10px auto;
 border: none;
 border-radius: 8px;
 color: #fff;

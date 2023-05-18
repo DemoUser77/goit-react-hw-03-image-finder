@@ -3,19 +3,21 @@ import React from 'react';
 import { GalleryItem,GalleryImage } from './ImageGalleryItem.styled';
 
 
-export function ImageGalleryItem({ webformatURL, largeImageURL, tags, onClick }) {
+export function ImageGalleryItem({ webformatURL, largeImageURL, tags, onClickModal }) {
    
-    < GalleryItem>
+    return(
+    < GalleryItem >
 
         <GalleryImage
             src={webformatURL}
             alt={tags}
             data-source={largeImageURL}
-            onClick={onClick}
+            onClick={onClickModal}
             
         />
     
-    </GalleryItem >
+        </GalleryItem >
+    )
     
 };
 
@@ -23,7 +25,8 @@ ImageGalleryItem.propType = {
     webformatURL: PropTypes.string.isRequired,
     largeImageURL: PropTypes.string.isRequired,
     tags: PropTypes.string.isRequired,
-    onClick:PropTypes.func.isRequired,
+    // onClick:PropTypes.func.isRequired,
+    onClickModal: PropTypes.func.isRequired,
     }
     
     
