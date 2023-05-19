@@ -6,6 +6,7 @@ import { Searchbar } from 'components/Searchbar/Searchbar';
 import { Modal } from 'components/Modal/Modal';
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
+// import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { fetchImages } from '../api/PixabayApi';
 
@@ -96,7 +97,7 @@ export class App extends React.Component {
       <div>
         <Searchbar onSubmit={this.handleSearchBar}  />
 
-        {images.length !== 0 && !error && (
+        {images.length > 0 && !error && (
           <ImageGallery images={images} error={error} onClickModal={this.onClickModal} />
         )}
 
@@ -108,8 +109,8 @@ export class App extends React.Component {
           (<Button onLoadMore={this.onLoadMore } />)}
         
         {isShowModal && (
-          <Modal onClick={this.toggleModal}
-            largeImageURL={largeImageURL}/>)}
+          <Modal onClose={this.toggleModal}
+          largeImageURL={largeImageURL}/>)}
        
         <ToastContainer
           position="top-right"
