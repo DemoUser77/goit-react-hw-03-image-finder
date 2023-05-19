@@ -79,7 +79,7 @@ export class App extends React.Component {
 
   toggleModal = () => {
     this.setState(({ isShowModal }) => ({
-      isShoModal: !isShowModal,
+      isShowModal: !isShowModal,
     }));
   };
   

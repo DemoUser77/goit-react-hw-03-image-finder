@@ -49,15 +49,15 @@ export const SearchButton = styled.button`
 `;
 
 export const SearchSpan = styled.span`
-  position: absolute;
+   position: absolute;
   width: 1px;
   height: 1px;
   padding: 0;
   overflow: hidden;
-  /* clip: rect(0, 0, 0, 0); */
+  /* clip: rect(0, 0, 0, 0);  */
   white-space: nowrap;
   clip-path: inset(50%);
-  border: 0;
+  border: 0; 
 `;
 
 export const SearchInput = styled.input`
